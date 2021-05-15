@@ -4,25 +4,23 @@ from setuptools import setup
 from setuptools_rust import Binding, RustExtension
 
 setup(
-    name="randomprime",
+    name="py-randomprime",
     version="0.1.0",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Rust",
     ],
-    packages=["randomprime"],
+    packages=["py_randomprime"],
     install_requires=[
     ],
     rust_extensions=[
         RustExtension(
-            "randomprime.randomprime",
-            path="randomprime/Cargo.toml",
-            binding=Binding.NoBinding,
+            "py_randomprime.rust",
+            binding=Binding.PyO3,
+            py_limited_api=True,
         )
     ],
     include_package_data=True,
