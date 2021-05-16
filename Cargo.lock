@@ -743,6 +743,7 @@ dependencies = [
 name = "py-randomprime"
 version = "0.1.0"
 dependencies = [
+ "dol_symbol_table",
  "pyo3",
  "randomprime",
 ]

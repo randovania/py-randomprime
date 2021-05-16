@@ -5,6 +5,7 @@ edition = "2018"
 
 [dependencies]
 randomprime = { path = "randomprime" }
+dol_symbol_table = { path = "randomprime/generated/dol_symbol_table" }
 
 [lib]
 name = "py_randomprime"
