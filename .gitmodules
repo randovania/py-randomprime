@@ -1,3 +1,4 @@
 [submodule "randomprime"]
 	path = randomprime
-	url = https://github.com/aprilwade/randomprime
+	url = https://github.com/toasterparty/randomprime
+	branch = pickups
