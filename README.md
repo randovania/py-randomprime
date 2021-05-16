@@ -1,2 +1,2 @@
 # py-randomprime
-Python 3 bindings for aprilwade's randomprime
+Python 3.6+ bindings for aprilwade's randomprime.
