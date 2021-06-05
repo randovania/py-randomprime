@@ -2,10 +2,18 @@ use pyo3::prelude::*;
 use pyo3::types::{PyTuple};
 use pyo3::wrap_pyfunction;
 use pyo3::exceptions::{PyValueError,PyRuntimeError};
-use std::collections::HashMap;
+
+use std::{
+    collections::HashMap,
+    fs::File,
+};
 
 use randomprime;
-use randomprime::patch_config::PatchConfig;
+use randomprime::{
+    structs::GcDisc,
+    patch_config::PatchConfig,
+    reader_writer::Reader,
+};
 use dol_symbol_table::mp1_symbol;
 
 enum Version
@@ -22,6 +30,15 @@ fn version_from_str(s: String) -> Option<Version>
         "0-02" => Some(Version::NtscU0_02),
         "pal" => Some(Version::Pal),
         _ => None,
+    }
+}
+
+fn version_to_str(v: Version) -> Option<String>
+{
+    match v {
+        Version::NtscU0_00 => Some("0-00".to_string()),
+        Version::NtscU0_02 => Some("0-02".to_string()),
+        Version::Pal => Some("pal".to_string()),
     }
 }
 
@@ -95,6 +112,38 @@ fn patch_iso(config_json: String, progress_notifier: PyObject) -> PyResult<()> {
     Ok(())
 }
 
+/// Gets version of the given file
+#[pyfunction]
+#[text_signature = "(file_path, /)"]
+fn get_iso_mp1_version(file_path: String) -> PyResult<Option<String>> {
+
+    let input_iso_file = File::open(file_path.trim())
+        .map_err(|e| PyValueError::new_err(format!("Failed to open {}: {}", file_path, e)))?;
+
+    let input_iso = unsafe { memmap::Mmap::map(&input_iso_file) }
+        .map_err(|e| PyValueError::new_err(format!("Failed to open {}: {}", file_path, e)))?;
+
+    let mut reader = Reader::new(&input_iso[..]);
+
+    let gc_disc: GcDisc = reader.read(());
+
+    let version = match (&gc_disc.header.game_identifier(), gc_disc.header.disc_id, gc_disc.header.version) {
+        (b"GM8E01", 0, 0) => Version::NtscU0_00,
+        // (b"GM8E01", 0, 1) => Version::NtscU0_01,
+        (b"GM8E01", 0, 2) => Version::NtscU0_02,
+        // (b"GM8J01", 0, 0) => Version::NtscJ,
+        (b"GM8P01", 0, 0) => Version::Pal,
+        // (b"R3ME01", 0, 0) => Version::NtscUTrilogy,
+        // (b"R3IJ01", 0, 0) => Version::NtscJTrilogy,
+        // (b"R3MP01", 0, 0) => Version::PalTrilogy,
+        _ => {
+            return Ok(None)
+        },
+    };
+
+    return Ok(version_to_str(version));
+}
+
 
 /// Gets the symbols for the given version
 #[pyfunction]
@@ -125,6 +174,11 @@ fn get_mp1_symbols(version: String) -> PyResult<HashMap<String, Option<u32>>> {
     add_symbol!("InitializePowerUp__12CPlayerStateFQ212CPlayerState9EItemTypei");
     add_symbol!("IncrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei");
     add_symbol!("DecrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei");
+
+    // Layers
+    add_symbol!("g_GameState");
+    add_symbol!("StateForWorld__10CGameStateFUi");
+    add_symbol!("SetLayerActive__16CWorldLayerStateFiib");
     
     Ok(result)
 }
@@ -136,6 +190,7 @@ fn get_mp1_symbols(version: String) -> PyResult<HashMap<String, Option<u32>>> {
 fn rust(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(patch_iso, m)?)?;
     m.add_function(wrap_pyfunction!(get_mp1_symbols, m)?)?;
+    m.add_function(wrap_pyfunction!(get_iso_mp1_version, m)?)?;
  
     Ok(())
 }

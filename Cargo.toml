@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
+memmap = "0.7"
 randomprime = { path = "randomprime" }
 dol_symbol_table = { path = "randomprime/generated/dol_symbol_table" }
 

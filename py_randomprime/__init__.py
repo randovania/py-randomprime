@@ -2,7 +2,7 @@ import copy
 import os
 import json
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Optional
 
 from . import rust, version
 
@@ -53,6 +53,16 @@ def patch_iso(input_iso: Path, output_iso: Path, config: dict, notifier: BasePro
     new_config["inputIso"] = os.fspath(input_iso)
     new_config["outputIso"] = os.fspath(output_iso)
     return patch_iso_raw(json.dumps(new_config), notifier)
+
+
+def symbols_for_file(input_file: Path) -> Optional[dict]:
+    v = rust.get_iso_mp1_version(os.fspath(input_file))
+    if v is not None:
+        return rust.get_mp1_symbols(v)
+
+
+def symbols_for_version(v: str) -> Optional[dict]:
+    return rust.get_mp1_symbols(v)
 
     
 __version__ = version.version
