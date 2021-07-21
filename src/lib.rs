@@ -176,6 +176,7 @@ fn get_mp1_symbols(version: String) -> PyResult<HashMap<String, Option<u32>>> {
     add_symbol!("DecrPickUp__12CPlayerStateFQ212CPlayerState9EItemTypei");
 
     // Layers
+    add_symbol!("g_StateManager");
     add_symbol!("g_GameState");
     add_symbol!("StateForWorld__10CGameStateFUi");
     add_symbol!("SetLayerActive__16CWorldLayerStateFiib");
