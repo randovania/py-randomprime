@@ -19,6 +19,7 @@ use dol_symbol_table::mp1_symbol;
 enum Version
 {
     NtscU0_00,
+    NtscU0_01,
     NtscU0_02,
     NtscJ,
     NtscK,
@@ -29,6 +30,7 @@ fn version_from_str(s: String) -> Option<Version>
 {
     match s.as_str() {
         "0-00" => Some(Version::NtscU0_00),
+        "0-01" => Some(Version::NtscU0_01),
         "0-02" => Some(Version::NtscU0_02),
         "kor" => Some(Version::NtscK),
         "jap" => Some(Version::NtscJ),
@@ -41,6 +43,7 @@ fn version_to_str(v: Version) -> Option<String>
 {
     match v {
         Version::NtscU0_00 => Some("0-00".to_string()),
+        Version::NtscU0_01 => Some("0-01".to_string()),
         Version::NtscU0_02 => Some("0-02".to_string()),
         Version::NtscK => Some("kor".to_string()),
         Version::NtscJ => Some("jap".to_string()),
@@ -135,7 +138,7 @@ fn get_iso_mp1_version(file_path: String) -> PyResult<Option<String>> {
 
     let version = match (&gc_disc.header.game_identifier(), gc_disc.header.disc_id, gc_disc.header.version) {
         (b"GM8E01", 0, 0) => Version::NtscU0_00,
-        // (b"GM8E01", 0, 1) => Version::NtscU0_01,
+        (b"GM8E01", 0, 1) => Version::NtscU0_01,
         (b"GM8E01", 0, 2) => Version::NtscU0_02,
         (b"GM8E01", 0, 48) => Version::NtscK,
         (b"GM8J01", 0, 0) => Version::NtscJ,
@@ -168,6 +171,7 @@ fn get_mp1_symbols(version: String) -> PyResult<HashMap<String, Option<u32>>> {
                 let s = mp1_symbol!($sym);
                 result.insert(String::from($sym), match v {
                     Version::NtscU0_00    => s.addr_0_00,
+                    Version::NtscU0_01    => s.addr_0_01,
                     Version::NtscU0_02    => s.addr_0_02,
                     Version::NtscK        => s.addr_kor,
                     Version::NtscJ        => s.addr_jap,
