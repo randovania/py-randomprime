@@ -53,7 +53,7 @@ jobs:
 
       - name: build sdist
         run: python -m build --sdist
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: ${{ matrix.os == 'macos-10.15' }}
       
       - name: Store the packages
         uses: actions/upload-artifact@v2
