@@ -76,7 +76,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Avoid issues with Git's solution for CVE-2022-24765 breaking setuptools-scm
-        run: git config --global --add safe.directory *
+        run: git config --global --add safe.directory $(pwd)
 
       - run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
       - uses: Swatinem/rust-cache@v1
