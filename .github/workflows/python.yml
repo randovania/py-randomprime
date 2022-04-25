@@ -74,7 +74,10 @@ jobs:
         with:
           fetch-depth: 0
           submodules: 'recursive'
-      
+
+      - name: Avoid issues with Git's solution for CVE-2022-24765 breaking setuptools-scm
+        run: git config --global --add safe.directory *
+
       - run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
       - uses: Swatinem/rust-cache@v1
       - run: /opt/python/cp37-cp37m/bin/python -m venv .venv
@@ -86,7 +89,7 @@ jobs:
         run: .venv/bin/python -m pip install --upgrade build auditwheel
 
       - name: build wheel
-        run: .venv/bin/python -m build
+        run: .venv/bin/python -m build --wheel
 
       - name: multilinux stuff
         run: |
