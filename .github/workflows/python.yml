@@ -82,12 +82,11 @@ jobs:
       - name: Update pip
         run: .venv/bin/python -m pip install --upgrade pip
 
-     
       - name: Install Python packages
         run: .venv/bin/python -m pip install --upgrade build auditwheel
 
       - name: build wheel
-        run: .venv/bin/python -m build --wheel
+        run: .venv/bin/python -m build
 
       - name: multilinux stuff
         run: |
