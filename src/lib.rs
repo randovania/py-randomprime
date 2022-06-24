@@ -110,15 +110,18 @@ impl randomprime::structs::ProgressNotifier for ProgressNotifier
 /// Performs the patching with the given config.
 #[pyfunction]
 #[text_signature = "(config_json, progress_notifier, /)"]
-fn patch_iso(config_json: String, progress_notifier: PyObject) -> PyResult<()> {
-    let patch_config = PatchConfig::from_json(config_json.as_str())
-        .map_err(|e| PyValueError::new_err(e))?;
-    
-    let pn = ProgressNotifier::new(progress_notifier);
-    randomprime::patches::patch_iso(patch_config, pn)
-        .map_err(|e| PyRuntimeError::new_err(e))?;
+fn patch_iso(config_json: String, progress_notifier: PyObject, py: Python) -> PyResult<()> {
+    py.allow_threads(move || {
+        let patch_config = PatchConfig::from_json(config_json.as_str())
+            .map_err(|e| PyValueError::new_err(e))?;
 
-    Ok(())
+        let pn = ProgressNotifier::new(progress_notifier);
+
+        randomprime::patches::patch_iso(patch_config, pn)
+            .map_err(|e| PyRuntimeError::new_err(e))?;
+
+        Ok(())
+    })
 }
 
 /// Gets version of the given file
