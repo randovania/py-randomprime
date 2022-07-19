@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - 'macos-10.15'
+          - 'macos-12'
           - 'windows-latest'
 
     runs-on: ${{ matrix.os }}
@@ -53,7 +53,7 @@ jobs:
 
       - name: build sdist
         run: python -m build --sdist
-        if: ${{ matrix.os == 'macos-10.15' }}
+        if: ${{ matrix.os == 'macos-12' }}
 
       - name: Check if there are changes
         run: git diff --exit-code
