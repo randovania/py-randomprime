@@ -54,7 +54,10 @@ jobs:
       - name: build sdist
         run: python -m build --sdist
         if: ${{ matrix.os == 'macos-10.15' }}
-      
+
+      - name: Check if there are changes
+        run: git diff --exit-code
+
       - name: Store the packages
         uses: actions/upload-artifact@v3
         with:
@@ -95,6 +98,9 @@ jobs:
         run: |
           .venv/bin/python -m auditwheel repair --plat manylinux2014_x86_64 dist/*-linux_x86_64.whl -w dist
           rm dist/*-linux_x86_64.whl
+
+      - name: Check if there are changes
+        run: git diff --exit-code
 
       - name: Store the packages
         uses: actions/upload-artifact@v3
