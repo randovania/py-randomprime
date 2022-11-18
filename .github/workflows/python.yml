@@ -39,7 +39,7 @@ jobs:
           target: powerpc-unknown-linux-gnu
           override: true
      
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       
       - name: Install Python packages
         run: python -m pip install --upgrade build cibuildwheel==2.2.0a1
@@ -82,7 +82,7 @@ jobs:
         run: git config --global --add safe.directory $(pwd)
 
       - run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - run: /opt/python/cp37-cp37m/bin/python -m venv .venv
      
       - name: Update pip
