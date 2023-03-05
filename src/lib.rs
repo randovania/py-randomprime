@@ -196,6 +196,9 @@ fn get_mp1_symbols(version: String) -> PyResult<HashMap<String, Option<u32>>> {
     add_symbol!("g_GameState");
     add_symbol!("StateForWorld__10CGameStateFUi");
     add_symbol!("SetLayerActive__16CWorldLayerStateFiib");
+
+    // Ice Trap
+    add_symbol!("Freeze__7CPlayerFR13CStateManagerUiUsUi");
     
     Ok(result)
 }
