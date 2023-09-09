@@ -4,7 +4,6 @@ on:
   release:
     types:
       - created
-  workflow_dispatch:
 
 jobs:
   build:
@@ -28,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: randomprime_patcher.exe
-        path: target/release/randomprime_patcher.exe
+        path: ${GITHUB_WORKSPACE}\target\release\randomprime_patcher.exe
 
   attach:
     runs-on: ubuntu-latest
