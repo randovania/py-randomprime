@@ -18,6 +18,7 @@ jobs:
 
     - name: Add powerpc-unknown-linux-gnu
       run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+      working-directory: randomprime
     - uses: Swatinem/rust-cache@v2
 
     - name: Cargo Build
@@ -41,12 +42,10 @@ jobs:
       with:
         name: randomprime_patcher.exe
 
-    - name: Attach Artifact to Release
-      run: |
-        token=$GITHUB_TOKEN
-        file=randomprime_patcher.exe
-        release_id=$(curl -s -H "Authorization: token $token" \
-          "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r '.id')
-        curl -X POST -H "Authorization: token $token" -H "Content-Type: application/octet-stream" \
-          --data-binary "@$file" \
-          "https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$release_id/assets?name=$(basename $file)"
+    - name: Attach to Release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: randomprime_patcher.exe
+        asset_name: randomprime_patcher-$tag.exe
+        tag: ${{ github.ref }}
+        overwrite: true
