@@ -19,18 +19,17 @@ jobs:
     - name: Add powerpc-unknown-linux-gnu
       run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
     - uses: Swatinem/rust-cache@v2
-    
+
     - name: Cargo Build
       run: cargo build --release
-
-    - name: List
-      run: ls -R .
+      working-directory: randomprime
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: randomprime_patcher.exe
-        path: target\release\randomprime_patcher.exe
+        path: randomprime\target\release\randomprime_patcher.exe
+        if-no-files-found: error
 
   attach:
     runs-on: ubuntu-latest
