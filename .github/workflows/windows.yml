@@ -1,0 +1,41 @@
+name: Windows (Exe)
+
+on:
+  push:
+    branches:
+     - main
+    tags:
+      - '*'
+
+  merge_group:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  win-build:
+    strategy:
+      fail-fast: false
+
+    runs-on: 'windows-latest'
+    name: Build Exe
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: Add powerpc-unknown-linux-gnu
+        run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+      - uses: Swatinem/rust-cache@v2
+      
+      - name: Cargo Build
+        run: cargo build --release
+
+      - name: Store the packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-package-distributions
+          path: target/release/randomprime.exe
