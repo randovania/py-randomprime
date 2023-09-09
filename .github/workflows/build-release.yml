@@ -1,0 +1,51 @@
+name: Distribute Exe
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: 'recursive'
+
+    - name: Add powerpc-unknown-linux-gnu
+      run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+    - uses: Swatinem/rust-cache@v2
+    
+    - name: Cargo Build
+      run: cargo build --release
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: randomprime_patcher.exe
+        path: target/release/randomprime_patcher.exe
+
+  attach:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: randomprime_patcher.exe
+
+    - name: Attach Artifact to Release
+      run: |
+        token=$GITHUB_TOKEN
+        file=randomprime_patcher.exe
+        release_id=$(curl -s -H "Authorization: token $token" \
+          "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r '.id')
+        curl -X POST -H "Authorization: token $token" -H "Content-Type: application/octet-stream" \
+          --data-binary "@$file" \
+          "https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$release_id/assets?name=$(basename $file)"
