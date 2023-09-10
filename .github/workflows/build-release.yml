@@ -16,6 +16,10 @@ jobs:
         fetch-depth: 0
         submodules: 'recursive'
 
+    - uses: actions/checkout@v3
+    - name: Set ENV
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
     - name: Add powerpc-unknown-linux-gnu
       run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
       working-directory: randomprime
@@ -39,11 +43,11 @@ jobs:
     steps:
     - uses: montudor/action-zip@v1
       with:
-        args: zip -q randomprime_patcher-${{ github.ref }}.zip randomprime\target\release\randomprime_patcher.exe
+        args: zip -q randomprime_patcher-${{ env.RELEASE_VERSION }}.zip randomprime\target\release\randomprime_patcher.exe
 
     - name: Attach to Release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: randomprime_patcher-${{ github.ref }}.zip
+        file: randomprime_patcher-${{ env.RELEASE_VERSION }}.zip
         tag: ${{ github.ref }}
         overwrite: true
