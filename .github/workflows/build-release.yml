@@ -41,13 +41,15 @@ jobs:
     needs: build
 
     steps:
-    - uses: montudor/action-zip@v1
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
       with:
-        args: zip -q randomprime_patcher-${{ env.RELEASE_VERSION }}.zip randomprime\target\release\randomprime_patcher.exe
+        name: randomprime_patcher.exe
 
     - name: Attach to Release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: randomprime_patcher-${{ env.RELEASE_VERSION }}.zip
+        file: randomprime_patcher.zip
+        asset_name: randomprime_patcher-$tag.zip
         tag: ${{ github.ref }}
         overwrite: true
