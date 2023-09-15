@@ -34,7 +34,7 @@ jobs:
     #     if-no-files-found: error
 
     - name: Fake Exe
-      run: copy NUL randomprime_patcher.exe
+      run: echo. > randomprime_patcher.exe
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
