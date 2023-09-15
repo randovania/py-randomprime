@@ -4,7 +4,6 @@ on:
   release:
     types:
       - created
-  push:
 
 jobs:
   build:
@@ -17,31 +16,20 @@ jobs:
         fetch-depth: 0
         submodules: 'recursive'
 
-    # - name: Add powerpc-unknown-linux-gnu
-    #   run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
-    #   working-directory: randomprime
-    # - uses: Swatinem/rust-cache@v2
+    - name: Add powerpc-unknown-linux-gnu
+      run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+      working-directory: randomprime
+    - uses: Swatinem/rust-cache@v2
 
-    # - name: Cargo Build
-    #   run: cargo build --release
-    #   working-directory: randomprime
-
-    # - name: Upload Artifacts
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: randomprime_patcher.exe
-    #     path: randomprime\target\release\randomprime_patcher.exe
-    #     if-no-files-found: error
-
-    - name: Fake Exe
-      run: |
-        $null >> randomprime_patcher.exe
+    - name: Cargo Build
+      run: cargo build --release
+      working-directory: randomprime
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: randomprime_patcher.exe
-        path: randomprime_patcher.exe
+        path: randomprime\target\release\randomprime_patcher.exe
         if-no-files-found: error
 
   attach:
@@ -53,9 +41,6 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: randomprime_patcher.exe
-
-    - name: ls
-      run: ls -lag
 
     - uses: montudor/action-zip@v1
       with:
