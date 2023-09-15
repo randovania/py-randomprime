@@ -22,7 +22,7 @@ jobs:
       working-directory: randomprime
 
     - name: Cargo Build
-      run: cargo build --release
+      run: cargo build
       working-directory: randomprime
 
     - name: Upload Artifacts
