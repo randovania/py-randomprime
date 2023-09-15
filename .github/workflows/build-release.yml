@@ -54,6 +54,9 @@ jobs:
       with:
         name: randomprime_patcher.exe
 
+    - name: ls
+      run: ls -lag
+
     - name: Attach to Release
       uses: svenstaro/upload-release-action@v2
       with:
