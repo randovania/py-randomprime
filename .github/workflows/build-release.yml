@@ -57,10 +57,14 @@ jobs:
     - name: ls
       run: ls -lag
 
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip randomprime_patcher.zip randomprime_patcher.exe
+
     - name: Attach to Release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: randomprime_patcher.exe.zip
+        file: randomprime_patcher.zip
         asset_name: randomprime_patcher-$tag.zip
         tag: ${{ github.ref }}
         overwrite: true
