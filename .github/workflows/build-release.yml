@@ -17,10 +17,6 @@ jobs:
         fetch-depth: 0
         submodules: 'recursive'
 
-    - uses: actions/checkout@v3
-    - name: Set ENV
-      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
     # - name: Add powerpc-unknown-linux-gnu
     #   run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
     #   working-directory: randomprime
@@ -38,7 +34,7 @@ jobs:
     #     if-no-files-found: error
 
     - name: Fake Exe
-      run: type nul > randomprime_patcher.exe
+      run: copy NUL randomprime_patcher.exe
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
