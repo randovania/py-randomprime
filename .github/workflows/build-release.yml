@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
         submodules: 'recursive'
@@ -19,17 +19,16 @@ jobs:
     - name: Add powerpc-unknown-linux-gnu
       run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
       working-directory: randomprime
-    - uses: Swatinem/rust-cache@v2
 
     - name: Cargo Build
-      run: cargo build --release
+      run: cargo build
       working-directory: randomprime
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: randomprime_patcher.exe
-        path: randomprime\target\release\randomprime_patcher.exe
+        path: randomprime\target\debug\randomprime_patcher.exe
         if-no-files-found: error
 
   attach:
