@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: randomprime_patcher.exe
-        path: randomprime\target\release\randomprime_patcher.exe
+        path: randomprime\target\debug\randomprime_patcher.exe
         if-no-files-found: error
 
 #   attach:
