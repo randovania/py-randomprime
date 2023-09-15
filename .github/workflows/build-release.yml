@@ -4,6 +4,7 @@ on:
   release:
     types:
       - created
+  push:
 
 jobs:
   build:
@@ -20,20 +21,30 @@ jobs:
     - name: Set ENV
       run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-    - name: Add powerpc-unknown-linux-gnu
-      run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
-      working-directory: randomprime
-    - uses: Swatinem/rust-cache@v2
+    # - name: Add powerpc-unknown-linux-gnu
+    #   run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+    #   working-directory: randomprime
+    # - uses: Swatinem/rust-cache@v2
 
-    - name: Cargo Build
-      run: cargo build --release
-      working-directory: randomprime
+    # - name: Cargo Build
+    #   run: cargo build --release
+    #   working-directory: randomprime
+
+    # - name: Upload Artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: randomprime_patcher.exe
+    #     path: randomprime\target\release\randomprime_patcher.exe
+    #     if-no-files-found: error
+
+    - name: Fake Exe
+      run: type nul > randomprime_patcher.exe
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: randomprime_patcher.exe
-        path: randomprime\target\release\randomprime_patcher.exe
+        path: randomprime_patcher.exe
         if-no-files-found: error
 
   attach:
