@@ -21,16 +21,24 @@ jobs:
       run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
       working-directory: randomprime
 
-    - name: Cargo Build
-      run: cargo build
+    - name: git show
+      run: git show
       working-directory: randomprime
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: randomprime_patcher.exe
-        path: randomprime\target\debug\randomprime_patcher.exe
-        if-no-files-found: error
+    - name: git status
+      run: git status
+      working-directory: randomprime
+
+    # - name: Cargo Build
+    #   run: cargo build
+    #   working-directory: randomprime
+
+    # - name: Upload Artifacts
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: randomprime_patcher.exe
+    #     path: randomprime\target\debug\randomprime_patcher.exe
+    #     if-no-files-found: error
 
 #   attach:
 #     runs-on: ubuntu-latest
