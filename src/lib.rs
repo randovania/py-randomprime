@@ -33,7 +33,7 @@ fn version_from_str(s: String) -> Option<Version>
         "0-01" => Some(Version::NtscU0_01),
         "0-02" => Some(Version::NtscU0_02),
         "kor" => Some(Version::NtscK),
-        "jap" => Some(Version::NtscJ),
+        "jpn" => Some(Version::NtscJ),
         "pal" => Some(Version::Pal),
         _ => None,
     }
@@ -46,7 +46,7 @@ fn version_to_str(v: Version) -> Option<String>
         Version::NtscU0_01 => Some("0-01".to_string()),
         Version::NtscU0_02 => Some("0-02".to_string()),
         Version::NtscK => Some("kor".to_string()),
-        Version::NtscJ => Some("jap".to_string()),
+        Version::NtscJ => Some("jpn".to_string()),
         Version::Pal => Some("pal".to_string()),
     }
 }
@@ -177,7 +177,7 @@ fn get_mp1_symbols(version: String) -> PyResult<HashMap<String, Option<u32>>> {
                     Version::NtscU0_01    => s.addr_0_01,
                     Version::NtscU0_02    => s.addr_0_02,
                     Version::NtscK        => s.addr_kor,
-                    Version::NtscJ        => s.addr_jap,
+                    Version::NtscJ        => s.addr_jpn,
                     Version::Pal          => s.addr_pal,
                 });
             }
