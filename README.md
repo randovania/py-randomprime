@@ -1,3 +1,2 @@
 # py-randomprime
-Python 3.8+ bindings for aprilwade's randomprime.
-Currently using toasterparty's fork.
+Python 3.8+ bindings for [randomprime](https://github.com/randovania/randomprime)
