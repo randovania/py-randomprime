@@ -3,6 +3,9 @@ name = "py-randomprime"
 version = "0.1.0"
 edition = "2018"
 
+[build-dependencies]
+pyo3-build-config = "0.17.1"
+
 [dependencies]
 memmap = "0.7"
 randomprime = { path = "randomprime" }
