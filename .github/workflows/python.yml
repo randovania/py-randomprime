@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - 'macos-12'
+          - 'macos-13'
           - 'windows-latest'
 
     runs-on: ${{ matrix.os }}
@@ -108,9 +108,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - {name: 'macOS', image: 'macos-latest', wheel: 'macosx_*'}
+          - {name: 'macOS', image: 'macos-13', wheel: 'macosx_*'}
           - {name: 'Windows', image: 'windows-latest', wheel: 'win_amd64'}
-          - {name: 'Linux', image: 'ubuntu-latest', wheel: 'manylinux_2_28_x86_64.manylinux_2_28_x86_64'}
+          - {name: 'Linux', image: 'ubuntu-latest', wheel: 'manylinux_2_28_x86_64'}
         python:
           - '3.8'
           - '3.9'
