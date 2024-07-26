@@ -47,7 +47,7 @@ jobs:
       - name: Store the packages
         uses: actions/upload-artifact@v4
         with:
-          name: python-package-distributions
+          name: python-package-${{ matrix.os }}
           path: dist/
 
   linux-build:
@@ -94,7 +94,7 @@ jobs:
       - name: Store the packages
         uses: actions/upload-artifact@v4
         with:
-          name: python-package-distributions
+          name: python-package-linux
           path: dist/
 
   test:
@@ -130,7 +130,8 @@ jobs:
       - name: Download all the dists
         uses: actions/download-artifact@v4
         with:
-          name: python-package-distributions
+          pattern: python-package-*
+          merge-multiple: true
           path: dist/
             
       - name: Install Python packages
@@ -153,7 +154,8 @@ jobs:
       - name: Download all the dists
         uses: actions/download-artifact@v4
         with:
-          name: python-package-distributions
+          pattern: python-package-*
+          merge-multiple: true
           path: dist/
 
       - name: Publish 📦 to TestPyPI
