@@ -45,10 +45,10 @@ jobs:
         run: git diff --exit-code
 
       - name: Store the packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: python-package-distributions
-          path: dist
+          name: python-package-${{ matrix.os }}
+          path: dist/
 
   linux-build:
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
       - name: Add powerpc-unknown-linux-gnu
         run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
 
-      - uses: Swatinem/rust-cache@v2.7.0
+      - uses: Swatinem/rust-cache@v2.7.3
 
       - run: /opt/python/cp38-cp38/bin/python -m venv .venv
      
@@ -92,10 +92,10 @@ jobs:
         run: git diff --exit-code
 
       - name: Store the packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: python-package-distributions
-          path: dist
+          name: python-package-linux
+          path: dist/
 
   test:
     needs:
@@ -128,9 +128,10 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Download all the dists
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: python-package-distributions
+          pattern: python-package-*
+          merge-multiple: true
           path: dist/
             
       - name: Install Python packages
@@ -151,9 +152,10 @@ jobs:
 
     steps:
       - name: Download all the dists
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: python-package-distributions
+          pattern: python-package-*
+          merge-multiple: true
           path: dist/
 
       - name: Publish 📦 to TestPyPI
