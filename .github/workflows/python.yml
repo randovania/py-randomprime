@@ -33,7 +33,7 @@ jobs:
 
       - name: Add powerpc-unknown-linux-gnu
         run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
-      - uses: Swatinem/rust-cache@v2.7.5
+      - uses: Swatinem/rust-cache@v2.7.8
       
       - name: Build wheels
         run: pipx run cibuildwheel==2.20.0 --output-dir dist
@@ -70,7 +70,7 @@ jobs:
       - name: Add powerpc-unknown-linux-gnu
         run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
 
-      - uses: Swatinem/rust-cache@v2.7.5
+      - uses: Swatinem/rust-cache@v2.7.8
 
       - run: /opt/python/cp39-cp39/bin/python -m venv .venv
      
