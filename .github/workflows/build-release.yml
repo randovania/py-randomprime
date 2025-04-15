@@ -17,9 +17,13 @@ jobs:
         fetch-depth: 0
         submodules: 'recursive'
 
-    - name: Add powerpc-unknown-linux-gnu
-      run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
-      working-directory: randomprime
+    - name: Set Rust toolchain
+      uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: 1.85.1
+        target: powerpc-unknown-linux-gnu
+        override: true
 
     - name: Cargo Build
       run: cargo build

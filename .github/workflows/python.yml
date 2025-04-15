@@ -32,7 +32,7 @@ jobs:
           submodules: 'recursive'
 
       - name: Add powerpc-unknown-linux-gnu
-        run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+        run: rustup target add --toolchain 1.85.1 powerpc-unknown-linux-gnu
       - uses: Swatinem/rust-cache@v2.7.8
       
       - name: Build wheels
@@ -68,7 +68,7 @@ jobs:
         run: git config --global --add safe.directory $(pwd)
 
       - name: Add powerpc-unknown-linux-gnu
-        run: rustup target add --toolchain stable powerpc-unknown-linux-gnu
+        run: rustup target add --toolchain 1.85.1 powerpc-unknown-linux-gnu
 
       - uses: Swatinem/rust-cache@v2.7.8
 
