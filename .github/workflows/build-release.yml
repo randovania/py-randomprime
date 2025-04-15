@@ -30,7 +30,7 @@ jobs:
       working-directory: randomprime
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: randomprime_patcher.exe
         path: randomprime\target\debug\randomprime_patcher.exe
