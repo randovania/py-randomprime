@@ -123,7 +123,7 @@ jobs:
       matrix:
         os:
           - {name: 'macOS Intel', image: 'macos-15-intel', wheel: 'macosx_*_x86_64'}
-          - {name: 'macOS arm64', image: 'macos-15-latest', wheel: 'macosx_*_arm64'}
+          - {name: 'macOS arm64', image: 'macos-latest', wheel: 'macosx_*_arm64'}
           - {name: 'Windows', image: 'windows-latest', wheel: 'win_amd64'}
           - {name: 'Linux', image: 'ubuntu-latest', wheel: 'manylinux_2_28_x86_64'}
         python:
