@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - 'macos-15-intel'
+          - 'macos-15'
           - 'windows-latest'
 
     runs-on: ${{ matrix.os }}
@@ -50,7 +50,7 @@ jobs:
         env:
           CIBW_BUILD: 'cp39-*'
           CIBW_SKIP: '*-win32 *-manylinux_i686'
-          CIBW_ARCHS_MACOS: 'x86_64'
+          CIBW_ARCHS_MACOS: 'x86_64 arm64'
           MACOSX_DEPLOYMENT_TARGET: '10.12'
 
       - name: Check if there are changes
@@ -121,6 +121,7 @@ jobs:
       matrix:
         os:
           - {name: 'macOS', image: 'macos-15-intel', wheel: 'macosx_*'}
+          - {name: 'macOS', image: 'macos-15-latest', wheel: 'macosx_*'}
           - {name: 'Windows', image: 'windows-latest', wheel: 'win_amd64'}
           - {name: 'Linux', image: 'ubuntu-latest', wheel: 'manylinux_2_28_x86_64'}
         python:
