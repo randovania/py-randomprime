@@ -122,8 +122,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - {name: 'macOS', image: 'macos-15-intel', wheel: 'macosx_*'}
-          - {name: 'macOS', image: 'macos-15-latest', wheel: 'macosx_*'}
+          - {name: 'macOS Intel', image: 'macos-15-intel', wheel: 'macosx_*_x86_64'}
+          - {name: 'macOS arm64', image: 'macos-15-latest', wheel: 'macosx_*_arm64'}
           - {name: 'Windows', image: 'windows-latest', wheel: 'win_amd64'}
           - {name: 'Linux', image: 'ubuntu-latest', wheel: 'manylinux_2_28_x86_64'}
         python:
