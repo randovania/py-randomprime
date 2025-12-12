@@ -59,7 +59,7 @@ jobs:
         run: git diff --exit-code
 
       - name: Store the packages
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: python-package-${{ matrix.os }}
           path: dist/
@@ -106,7 +106,7 @@ jobs:
         run: git diff --exit-code
 
       - name: Store the packages
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: python-package-linux
           path: dist/
