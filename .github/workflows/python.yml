@@ -40,7 +40,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.15'
+          python-version: '3.14'
 
       - name: Add powerpc-unknown-linux-gnu
         run: rustup target add --toolchain 1.85.1 powerpc-unknown-linux-gnu
@@ -132,7 +132,6 @@ jobs:
           - '3.12'
           - '3.13'
           - '3.14'
-          - '3.15'
 
     steps:
       - name: Checkout
